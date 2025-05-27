@@ -90,11 +90,11 @@ def run_pipeline(filename, mmcad_model):
     with torch.no_grad():
         logits, fused = mmcad_model(img_feat, txt_feat)
         prob = torch.sigmoid(logits).item()
-        label = "Abusive" if prob > 0.5 else "Non-Abusive"
+        label = "ED_Promotion" if prob > 0.5 else "ED_Neutral"
         print(f"[Prediction]: {label} (confidence: {prob:.2f})")
 
         # Explanation only for abusive cases
         if label == "Abusive":
-            prompt = f"Why is this meme abusive? It contains the following text: '{combined_text}' and image features."
+            prompt = f"Why is this promotes eating disorder? It contains the following text: '{combined_text}' and image features."
             rationale = generate_explanation(prompt)
             print("[Generated Explanation]:", rationale)
